@@ -1,0 +1,80 @@
+name: Build do Software (SSCONPAV Desktop)
+
+# Builda o instalador .exe sempre que o sistema.html ou o projeto Electron
+# mudam. Roda num runner Windows de verdade -- o instalador sai pronto pra
+# usar, sem precisar de nada instalado na sua máquina.
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'sistema.html'
+      - 'ssconpav-desktop/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publicacao-ssconpav
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ssconpav-desktop
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+
+      - name: Instalar dependências
+        run: npm install --no-audit --no-fund
+
+      - name: Copiar o sistema mais recente para dentro do projeto
+        shell: bash
+        run: cp ../sistema.html www/sistema.html
+
+      - name: Ler a versão de dentro do próprio sistema.html
+        id: ver
+        shell: bash
+        run: |
+          SIS=$(grep -o "SYSTEM_VERSION = '[^']*'" www/sistema.html | head -1 | sed "s/.*'\(.*\)'/\1/")
+          echo "sistema=$SIS" >> "$GITHUB_OUTPUT"
+          echo "Versão do sistema: $SIS"
+          BUILD=$(date -u +%Y.%-m.%-d%H%M)
+          npm pkg set version="$BUILD"
+
+      - name: Gerar o instalador (.exe)
+        run: npm run dist
+
+      - name: Copiar o instalador para a raiz do canal
+        shell: bash
+        run: |
+          ARQ=$(ls dist/*.exe | head -1)
+          cp "$ARQ" ../SSCONPAV-Setup.exe
+
+      - name: Atualizar o versao-sistema.json com a versão do instalador
+        shell: bash
+        run: |
+          cd ..
+          python3 - << 'PY'
+          import json
+          v = json.load(open('versao-sistema.json'))
+          v['exeVersion'] = "${{ steps.ver.outputs.sistema }}"
+          v['exeUrl'] = "https://ssconpavbkp-boop.github.io/ssconpav-software/SSCONPAV-Setup.exe"
+          json.dump(v, open('versao-sistema.json','w'), indent=2, ensure_ascii=False)
+          PY
+
+      - name: Publicar o instalador e o versao-sistema.json
+        shell: bash
+        run: |
+          cd ..
+          git config user.name  'Publicador SSCONPAV'
+          git config user.email 'actions@github.com'
+          git add SSCONPAV-Setup.exe versao-sistema.json
+          git diff --cached --quiet && echo "Nada novo para publicar." || \
+            (git commit -m "Instalador ${{ steps.ver.outputs.sistema }}" && git push)

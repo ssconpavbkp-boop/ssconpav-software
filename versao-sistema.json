@@ -1,4 +1,4 @@
 {
-  "systemVersion": "20261001-001",
-  "notas": "Primeira versão do SSCONPAV: base Funchal com interface estilo macOS."
+  "systemVersion": "20261001-002",
+  "notas": "Mesa redesenhada: widgets de hoje, resumo rápido e nuvem; aplicativos agrupados por módulo; entrada direta na mesa após o login."
 }

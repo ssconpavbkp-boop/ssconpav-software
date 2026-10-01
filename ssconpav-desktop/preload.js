@@ -8,3 +8,5 @@ try {
 } catch (e) { /* mantém o padrão acima se o processo principal não responder */ }
 
 window.TESTE_CASCA = status;
+/* a tela chama isto para a casca baixar a versão nova e recarregar na hora */
+window.TESTE_CASCA.atualizar = () => ipcRenderer.send('atualizar-sistema');

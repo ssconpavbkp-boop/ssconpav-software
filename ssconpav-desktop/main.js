@@ -91,6 +91,22 @@ ipcMain.on('pedir-status-casca', (event) => {
   event.returnValue = lerStatus() || { versao: PROGRAMA_VERSAO, conteudo: 'instalador' };
 });
 
+/* A tela pede isto quando descobre uma versão publicada mais nova e a pessoa
+   está parada na Mesa: baixa o sistema.html novo e recarrega a janela -- sem
+   fechar o programa, sem instalar nada. */
+let atualizando = false;
+ipcMain.on('atualizar-sistema', async (event) => {
+  if (atualizando) return;
+  atualizando = true;
+  try {
+    await prepararSistema();
+    const win = BrowserWindow.fromWebContents(event.sender);
+    if (win) win.loadFile(arquivoSistema());
+  } catch (e) {
+    console.warn('Não deu para atualizar agora:', e.message);
+  } finally { atualizando = false; }
+});
+
 app.whenReady().then(() => {
   criarJanela();
   app.on('activate', () => {

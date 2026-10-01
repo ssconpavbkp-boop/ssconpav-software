@@ -1,4 +1,6 @@
 {
   "systemVersion": "20261001-005",
-  "notas": "Atualização automática: a versão nova entra sozinha assim que você está na Mesa ou no login, sem baixar nem reinstalar nada."
+  "notas": "Atualização automática: a versão nova entra sozinha assim que você está na Mesa ou no login, sem baixar nem reinstalar nada.",
+  "exeVersion": "20261001-005",
+  "exeUrl": "https://ssconpavbkp-boop.github.io/ssconpav-software/SSCONPAV-Setup.exe"
 }

@@ -1,4 +1,4 @@
 {
-  "systemVersion": "20261001-003",
-  "notas": "Mesa em modo painel: indicadores de execução, execução por dia, equipes, últimos lançamentos, serviços/locais e boletins de obra."
+  "systemVersion": "20261001-004",
+  "notas": "Duas mesas separadas: Mesa Tapa Buraco (tema escuro laranja) e Mesa de Obras (tema claro), com o logo branco no dock para alternar."
 }

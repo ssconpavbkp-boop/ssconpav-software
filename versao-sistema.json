@@ -1,4 +1,6 @@
 {
   "systemVersion": "20261002-006",
-  "notas": "Tipos de serviço: catálogo reduzido a 'Recomposição de Capa' por enquanto; catálogos (serviços e equipes) sem repetidos e semeados só depois da primeira baixada da nuvem."
+  "notas": "Tipos de serviço: catálogo reduzido a 'Recomposição de Capa' por enquanto; catálogos (serviços e equipes) sem repetidos e semeados só depois da primeira baixada da nuvem.",
+  "exeVersion": "20261002-006",
+  "exeUrl": "https://ssconpavbkp-boop.github.io/ssconpav-software/SSCONPAV-Setup.exe"
 }

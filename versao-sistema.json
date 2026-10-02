@@ -1,6 +1,4 @@
 {
-  "systemVersion": "20261001-005",
-  "notas": "Atualização automática: a versão nova entra sozinha assim que você está na Mesa ou no login, sem baixar nem reinstalar nada.",
-  "exeVersion": "20261001-005",
-  "exeUrl": "https://ssconpavbkp-boop.github.io/ssconpav-software/SSCONPAV-Setup.exe"
+  "systemVersion": "20261002-006",
+  "notas": "Tipos de serviço: catálogo reduzido a 'Recomposição de Capa' por enquanto; catálogos (serviços e equipes) sem repetidos e semeados só depois da primeira baixada da nuvem."
 }

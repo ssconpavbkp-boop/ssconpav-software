@@ -78,5 +78,5 @@ jobs:
           git add SSCONPAV-Setup.exe versao-sistema.json
           if git diff --cached --quiet; then echo "Nada novo para publicar."; else
             git commit -m "Instalador ${{ steps.ver.outputs.sistema }}"
-            for i in 1 2 3 4; do git push && break; git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" || exit 1; done
+            for i in 1 2 3 4; do git push && break; git pull --rebase --autostash -X theirs origin "${GITHUB_REF_NAME}" || exit 1; done
           fi

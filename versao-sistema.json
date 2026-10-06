@@ -1,4 +1,6 @@
 {
   "systemVersion": "20261006-007",
-  "notas": "Sincronização: a baixada da nuvem não perde mais registros quando muitos chegam com a mesma data (cadastros e exclusões agora aparecem em todos os computadores); na primeira abertura refaz a baixada completa."
+  "notas": "Sincronização: a baixada da nuvem não perde mais registros quando muitos chegam com a mesma data (cadastros e exclusões agora aparecem em todos os computadores); na primeira abertura refaz a baixada completa.",
+  "exeVersion": "20261006-007",
+  "exeUrl": "https://ssconpavbkp-boop.github.io/ssconpav-software/SSCONPAV-Setup.exe"
 }

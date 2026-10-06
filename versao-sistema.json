@@ -1,6 +1,4 @@
 {
-  "systemVersion": "20261002-006",
-  "notas": "Tipos de serviço: catálogo reduzido a 'Recomposição de Capa' por enquanto; catálogos (serviços e equipes) sem repetidos e semeados só depois da primeira baixada da nuvem.",
-  "exeVersion": "20261002-006",
-  "exeUrl": "https://ssconpavbkp-boop.github.io/ssconpav-software/SSCONPAV-Setup.exe"
+  "systemVersion": "20261006-007",
+  "notas": "Sincronização: a baixada da nuvem não perde mais registros quando muitos chegam com a mesma data (cadastros e exclusões agora aparecem em todos os computadores); na primeira abertura refaz a baixada completa."
 }

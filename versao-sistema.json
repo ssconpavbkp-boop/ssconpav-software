@@ -1,4 +1,6 @@
 {
   "systemVersion": "20261006-008",
-  "notas": "Configurações (cabeçalho, logos, CNPJ, contrato, rodapé) agora são compartilhadas pela nuvem: o que um computador salva aparece nos outros."
+  "notas": "Configurações (cabeçalho, logos, CNPJ, contrato, rodapé) agora são compartilhadas pela nuvem: o que um computador salva aparece nos outros.",
+  "exeVersion": "20261006-008",
+  "exeUrl": "https://ssconpavbkp-boop.github.io/ssconpav-software/SSCONPAV-Setup.exe"
 }

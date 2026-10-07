@@ -1,6 +1,4 @@
 {
-  "systemVersion": "20261007-009",
-  "notas": "Senhas: um computador novo não manda mais o usuário de fábrica para a nuvem (isso devolvia a senha padrão para todo mundo). Troque de novo a senha do usuário ssconpav depois desta versão.",
-  "exeVersion": "20261007-009",
-  "exeUrl": "https://ssconpavbkp-boop.github.io/ssconpav-software/SSCONPAV-Setup.exe"
+  "systemVersion": "20261007-010",
+  "notas": "Login: ao errar a senha, o sistema confere na nuvem antes de recusar (senha trocada em outro computador vale na hora); a tela de login atualiza a lista de usuários a cada 30 s."
 }

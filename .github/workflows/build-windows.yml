@@ -1,14 +1,13 @@
 name: Build do Software (SSCONPAV Desktop)
 
-# Builda o instalador .exe sempre que o sistema.html ou o projeto Electron
-# mudam. Roda num runner Windows de verdade -- o instalador sai pronto pra
+# Builda o instalador .exe só quando o projeto Electron (a casca) muda — o
+# sistema.html chega pelo canal, sem reinstalar. Roda num runner Windows de verdade -- o instalador sai pronto pra
 # usar, sem precisar de nada instalado na sua máquina.
 
 on:
   push:
     branches: [ main, master ]
     paths:
-      - 'sistema.html'
       - 'ssconpav-desktop/**'
   workflow_dispatch:
 

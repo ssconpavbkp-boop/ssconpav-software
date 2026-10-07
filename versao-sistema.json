@@ -1,4 +1,6 @@
 {
   "systemVersion": "20261007-009",
-  "notas": "Senhas: um computador novo não manda mais o usuário de fábrica para a nuvem (isso devolvia a senha padrão para todo mundo). Troque de novo a senha do usuário ssconpav depois desta versão."
+  "notas": "Senhas: um computador novo não manda mais o usuário de fábrica para a nuvem (isso devolvia a senha padrão para todo mundo). Troque de novo a senha do usuário ssconpav depois desta versão.",
+  "exeVersion": "20261007-009",
+  "exeUrl": "https://ssconpavbkp-boop.github.io/ssconpav-software/SSCONPAV-Setup.exe"
 }

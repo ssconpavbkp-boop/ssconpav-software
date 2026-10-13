@@ -56,26 +56,32 @@ jobs:
           ARQ=$(ls dist/*.exe | head -1)
           cp "$ARQ" ../SSCONPAV-Setup.exe
 
-      - name: Atualizar o versao-sistema.json com a versão do instalador
+      - name: Publicar o instalador e o versao-sistema.json (fundindo com o que já estiver na nuvem)
         shell: bash
         run: |
           cd ..
-          python3 - << 'PY'
+          git config user.name  'Publicador SSCONPAV'
+          git config user.email 'actions@github.com'
+          fundir() {
+            python3 - << 'PY'
           import json
           v = json.load(open('versao-sistema.json'))
           v['exeVersion'] = "${{ steps.ver.outputs.sistema }}"
           v['exeUrl'] = "https://ssconpavbkp-boop.github.io/ssconpav-software/SSCONPAV-Setup.exe"
           json.dump(v, open('versao-sistema.json','w'), indent=2, ensure_ascii=False)
           PY
-
-      - name: Publicar o instalador e o versao-sistema.json
-        shell: bash
-        run: |
-          cd ..
-          git config user.name  'Publicador SSCONPAV'
-          git config user.email 'actions@github.com'
+          }
+          fundir
           git add SSCONPAV-Setup.exe versao-sistema.json
-          if git diff --cached --quiet; then echo "Nada novo para publicar."; else
-            git commit -m "Instalador ${{ steps.ver.outputs.sistema }}"
-            for i in 1 2 3 4; do git push && break; git pull --rebase --autostash -X theirs origin "${GITHUB_REF_NAME}" || exit 1; done
-          fi
+          if git diff --cached --quiet; then echo "Nada novo para publicar."; exit 0; fi
+          git commit -m "Instalador ${{ steps.ver.outputs.sistema }}"
+          for i in 1 2 3 4 5; do
+            git push && exit 0
+            git fetch origin "${GITHUB_REF_NAME}"
+            git reset -q "origin/${GITHUB_REF_NAME}"
+            git checkout -- versao-sistema.json
+            fundir
+            git add SSCONPAV-Setup.exe versao-sistema.json
+            git commit -q -m "Instalador ${{ steps.ver.outputs.sistema }}" || true
+          done
+          echo "Não consegui publicar depois de 5 tentativas"; exit 1

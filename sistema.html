@@ -5372,11 +5372,11 @@ async function rfPlanilha(){
           'Descrição': (fo&&fo.descricao)||'',
           'Bairro/Rua': f.rua||'', 'Bairro': f.bairro||f._bairroFoto||'',
           'Serviço': f.servico||'',
-          'Largura (m)': (fo&&fo.largura!=null)?fo.largura:'',
-          'Comprimento (m)': (fo&&fo.comprimento!=null)?fo.comprimento:'',
-          'Espessura (cm)': (fo&&fo.espessura!=null)?fo.espessura:'',
-          'Área (m²)': (fo&&fo.area!=null)?fo.area:'',
-          'Volume (m³)': (fo&&fo.volume!=null)?fo.volume:'',
+          'Largura (m)': medNum(f.larg)||((fo&&fo.largura!=null)?fo.largura:''),
+          'Comprimento (m)': medNum(f.comp)||((fo&&fo.comprimento!=null)?fo.comprimento:''),
+          'Espessura (m)': medNum(f.prof)||'',
+          'Área (m²)': medArea(f)>0 ? +medArea(f).toFixed(3) : ((fo&&fo.area!=null)?fo.area:''),
+          'Volume (m³)': (medArea(f)>0 && medNum(f.prof)) ? +medVolume(f).toFixed(4) : ((fo&&fo.volume!=null)?fo.volume:''),
           'Latitude': (fo&&fo.lat!=null)?fo.lat:'',
           'Longitude': (fo&&fo.lng!=null)?fo.lng:'',
           'Direção': (fo&&fo.direcao)||'',
@@ -5391,11 +5391,12 @@ async function rfPlanilha(){
     });
     const resumo = lista.map(f=>{
       const fts = fotos.filter(x=>x.furoUid===f.uid);
-      const area = fts.reduce((s,x)=>s+(parseFloat(x.area)||0),0);
-      const vol  = fts.reduce((s,x)=>s+(parseFloat(x.volume)||0),0);
+      const area = medArea(f) || fts.reduce((s,x)=>s+(parseFloat(x.area)||0),0);
+      const vol  = (medArea(f)>0 && medNum(f.prof)) ? medVolume(f) : fts.reduce((s,x)=>s+(parseFloat(x.volume)||0),0);
       return {'Código':f._cod, 'Data':fmtData(f.data), 'Buraco':f.num, 'Equipe':f.equipe||'',
               'Bairro/Rua':f.rua||'', 'Serviço':f.servico||'',
               'Área (m²)': area?+area.toFixed(3):'', 'Volume (m³)': vol?+vol.toFixed(4):'',
+              'Comprimento (m)': medNum(f.comp)||'', 'Largura (m)': medNum(f.larg)||'', 'Espessura (m)': medNum(f.prof)||'',
               'Fotos': f._nf, 'Situação': furoStatus(f)};
     });
     const totalArea = resumo.reduce((s,r)=>s+(Number(r['Área (m²)'])||0),0);
@@ -5942,7 +5943,7 @@ async function edFotosRender(){
         <div class="edpar">${FOTO_TIPOS.map(t=>quadro(f,t)).join('')}</div>
       </div>`;}).join('')}</div>`;
     const comFoto = ordenada.filter(f=>{
-      const p = porFuro.get(f.uid)||{}; return FOTO_TIPOS.some(t=>p[t] && p[t].url); }).length;
+      const p = porFuro.get(f.uid)||{}; return FOTO_TIPOS.some(t=>p[t] && fotoLeve(p[t])); }).length;
     $('rf-ed-info').innerHTML = `<b>${ordenada.length}</b> buraco(s) neste dia · <b>${comFoto}</b> com foto`;
   }catch(err){ erroRender('ed-fotos', err, 'as fotos do dia'); }
 }
@@ -6137,7 +6138,7 @@ async function rfEdRender(){
     tb.innerHTML = lista.map(f=>{
       const p = porFuro.get(f.uid) || {};
       const a = p.antes || null, d = p.depois || null;
-      const nf = [a,d].filter(x=>x && (x.url || x.dataHora)).length;
+      const nf = [a,d].filter(x=>x && fotoLeve(x)).length;
       return `<tr>
         <td class="ac"><input type="number" value="${f.num||''}" style="width:56px;padding:5px;text-align:center"
               onchange="rfEdCampo('${f.uid}','num',this.value)"></td>
@@ -6153,7 +6154,7 @@ async function rfEdRender(){
     }).join('');
     const comFoto = lista.filter(f=>{
       const p = porFuro.get(f.uid) || {};
-      return [p.antes,p.depois].filter(x=>x && (x.url || x.dataHora)).length;
+      return [p.antes,p.depois].filter(x=>x && fotoLeve(x)).length;
     }).length;
     $('rf-ed-info').innerHTML = `<b>${lista.length}</b> buraco(s) neste dia · <b>${comFoto}</b> com foto`;
   }catch(err){ erroRender('rf-ed-tb', err, 'os buracos do dia'); }

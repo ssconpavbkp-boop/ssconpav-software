@@ -1,6 +1,7 @@
 {
   "systemVersion": "20261007-010",
-  "notas": "Login: ao errar a senha, o sistema confere na nuvem antes de recusar (senha trocada em outro computador vale na hora); a tela de login atualiza a lista de usuários a cada 30 s.",
   "exeVersion": "20261007-010",
-  "exeUrl": "https://ssconpavbkp-boop.github.io/ssconpav-software/SSCONPAV-Setup.exe"
+  "exeUrl": "https://ssconpavbkp-boop.github.io/ssconpav-software/SSCONPAV-Setup.exe",
+  "publicadoEm": "2026-10-20T19:15:40Z",
+  "notas": "Add files via upload"
 }
